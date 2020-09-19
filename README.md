@@ -16,9 +16,9 @@ Konfiguration für Raspis zum Abrufen und Decodieren von SRT Signalen.
 
 ## Installation
 
-`Raspberry Pi OS (32-bit) Lite` oder `Raspberry Pi OS (32-bit) with desktop` installieren.
-
-SRTDecoder samt Abhängigkeiten installieren:
+1. `Raspberry Pi OS (32-bit) Lite` oder `Raspberry Pi OS (32-bit) with desktop` auf Micro-SD Karte flashen.
+2. Datei mit dem Namen `ssh` auf Micro-SD Karte erstellen.
+3. per `ssh pi@<IP-Adresse>` SRTDecoder samt Abhängigkeiten installieren (PW: `raspberry`):
 ```
 sudo apt-get update && \
 sudo apt-get -y upgrade && \
