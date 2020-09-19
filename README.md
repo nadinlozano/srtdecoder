@@ -47,6 +47,7 @@ sudo stream-config
 - Dienst stoppen mit `sudo stream stop`
 - Dienst neustarten mit `sudo stream restart`
 - Status des Dienstes abrufen mit `sudo stream`
+- Konfiguration mit `sudo stream-config`
 
 Wenn kein Signal anliegt startet der Prozess andauernd neu. Ebenso falls der Prozess wegen irgendeinem Fehler während des Streams mal terminieren sollte. Nach wenigen Sekunden sollte es dann weiter gehen.
 Der leere Hintergrund (blank) ist absichtlich leicht grau, damit man sieht, dass das System ein Signal ausgibt bzw. ob der omxplayer selbst läuft.
