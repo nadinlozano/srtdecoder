@@ -95,7 +95,7 @@ echo -e "\nSystem-Deamon neu laden und Streaming-Services starten? (j/n) \c "
 read -n 1 STREAMON
 case $STREAMON in
 	j) systemctl daemon-reload
-           ./stream restart ;;
+     stream restart ;;
 	n) break ;;
 esac
 echo -e "\n*** Streaming-Konfiguration beendet. ***\n" 
