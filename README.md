@@ -34,7 +34,8 @@ sudo ./configure && \
 sudo make && \
 sudo make install && \
 cd && \
-sudo stream-config
+sudo stream-config && \
+sudo stream enable
 ```
 
 
