@@ -1,0 +1,101 @@
+#!/bin/bash
+
+# Konfiguration der Streamparameter
+
+# nur mir root-Rechten ausführen
+if [ `id -u` != 0 ]
+then
+  echo -e "\n\033[1;33;40mBitte dieses Skript mit root-Rechten aufrufen!\033[0m"
+  echo -e ">> sudo stream-config\n"
+  exit 1
+fi
+
+# Conf-File einbinden
+CONFFILE=/etc/srtdecoder.conf
+. $CONFFILE
+
+# Aktuelle Variablen anzeigen
+echo -e "\n*** Streaming-Konfiguration ***\n"
+echo -e "Aktuelle SRT-Quelle: \033[35m$SRT_URL\033[0m"
+echo -e "Aktuelle SRT-Optionen: \033[35m$SRT_OPT\033[0m"
+echo -e "Aktuelle OMX-URL: \033[35m$OMXPLAYER_URL\033[0m"
+echo -e "Aktuelle OMX-URL-Optionen: \033[35m$OMXPLAYER_URL_OPT\033[0m"
+echo -e "Aktuelle OMX-Player-Optionen: \033[35m$OMXPLAYER_OPT\033[0m\n"
+
+while :
+do
+  # Cases zum Editieren
+  echo "(1) SRT-Quelle ändern"
+  echo "(2) SRT-Optionen ändern"
+  echo "(3) OMX-URL ändern"
+  echo "(4) OMX-URL-Optionen ändern"
+  echo "(5) OMX-Optionen ändern"
+  echo -e "(0) Beenden\n"
+  read -n 1 -s INPUT
+  case $INPUT in
+	1) S_URL=$INPUT 
+	   echo -e " (1) Eingabe neue SRT-Quelle: \033[35m\c"
+	   read SRT_URL_N
+	   echo -e "\n\033[0m  >> Neue SRT-Quelle: \033[32m$SRT_URL_N \033[0m\n" ;;
+	2) S_OPT=$INPUT
+	   echo -e " (2) Eingabe neue SRT-Optionen: \033[35m\c"
+	   read SRT_OPT_N
+	   echo -e "\n\033[0m  >> Neue SRT-Optionen: \033[32m$SRT_OPT_N \033[0m\n" ;;
+	3) O_URL=$INPUT
+	   echo -e " (3) Eingabe neue OMX-Quelle: \033[35m\c"
+	   read OMXPLAYER_URL_N
+	   echo -e "\n\033[0m  >> Neue OMX-Player Quelle: \033[32m$OMXPLAYER_URL_N \033[0m\n" ;;
+	4) O_OPT=$INPUT
+	   echo -e " (4) Eingabe neue OMX-URL-Optionen: \033[35m\c"
+	   read OMXPLAYER_URL_OPT_N
+	   echo -e "\n\033[0m  >> Neue OMX-URL-Optionen: \033[32m$OMXPLAYER_URL_OPT_N \033[0m\n" ;;
+	5) O_OPT=$INPUT
+	   echo -e " (4) Eingabe neue OMX-Optionen: \033[35m\c"
+	   read OMXPLAYER_OPT_N
+	   echo -e "\n\033[0m  >> Neue OMX-Optionen: \033[32m$OMXPLAYER_OPT_N \033[0m\n" ;;
+	0) break ;;
+  esac
+done
+
+#falls keine neuen Variablen, bestehende übernehmen
+if [ -z "$SRT_URL_N" ]
+then
+  SRT_URL_N=$SRT_URL
+fi
+
+if [ -z "$SRT_OPT_N" ]
+then
+  SRT_OPT_N=$SRT_OPT
+fi
+
+if [ -z "$OMXPLAYER_URL_N" ]
+then
+  OMXPLAYER_URL_N=$OMXPLAYER_URL
+fi
+
+if [ -z "$OMXPLAYER_URL_OPT_N" ]
+then
+  OMXPLAYER_URL_OPT_N=$OMXPLAYER_URL_OPT
+fi
+
+if [ -z "$OMXPLAYER_OPT_N" ]
+then
+  OMXPLAYER_OPT_N=$OMXPLAYER_OPT
+fi
+
+# CONFFILE neu schreiben
+echo -e "SRT_URL=\"$SRT_URL_N\"" >$CONFFILE
+echo -e "SRT_OPT=\"$SRT_OPT_N\"" >>$CONFFILE
+echo -e "OMXPLAYER_URL=\"$OMXPLAYER_URL_N\"" >>$CONFFILE
+echo -e "OMXPLAYER_URL_OPT=\"$OMXPLAYER_URL_OPT_N\"" >>$CONFFILE
+echo -e "OMXPLAYER_OPT=\"$OMXPLAYER_OPT_N\"" >>$CONFFILE
+echo -e "\nNeuer Inhalkt der Konfigurationsdatei ($CONFFILE):"
+cat $CONFFILE
+echo -e "\nSystem-Deamon neu laden und Streaming-Services starten? (j/n) \c "
+read -n 1 STREAMON
+case $STREAMON in
+	j) systemctl daemon-reload
+           ./stream restart ;;
+	n) break ;;
+esac
+echo -e "\n*** Streaming-Konfiguration beendet. ***\n" 

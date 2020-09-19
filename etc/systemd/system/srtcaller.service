@@ -1,0 +1,15 @@
+[Unit]
+Description=srtcaller Daemon
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+EnvironmentFile=/etc/srtdecoder.conf
+ExecStart=srt-live-transmit ${SRT_URL}${SRT_OPT} ${OMXPLAYER_URL}${OMXPLAYER_URL_OPT}
+Type=simple
+Restart=always
+RestartSec=0.1
+StartLimitBurst=0
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+#Config-File
+CONFFILE=/etc/srtdecoder.conf
+. $CONFFILE
+STATUS=1
+
+case $1 in
+
+	stop) sudo systemctl stop srtcaller.service
+              sudo systemctl stop srtplayer.service ;;
+	start) sudo systemctl start srtcaller.service
+               sudo systemctl start srtplayer.service
+	       echo -e "\nSRT-Abruf von:\n\033[32m$SRT_URL$SRT_OPT\033[0m" ;;
+	restart) sudo systemctl restart srtcaller.service
+                 sudo systemctl restart srtplayer.service
+	         echo -e "\nSRT-Abruf von:\n\033[32m$SRT_URL$SRT_OPT\033[0m" ;;
+	enable) sudo systemctl enable srtcaller.service
+                sudo systemctl enable srtplayer.service
+	        STATUS=0
+		echo -e "srtcaller-Service: \c"
+                sudo systemctl is-enabled srtcaller.service
+		echo -e "srtplayer-Service: \c"
+                sudo systemctl is-enabled srtplayer.service ;;
+	disable) sudo systemctl disable srtcaller.service
+                 sudo systemctl disable srtplayer.service
+	         STATUS=0
+		 echo -e "srtcaller-Service: \c"
+                 sudo systemctl is-enabled srtcaller.service
+		 echo -e "srtplayer-Service: \c"
+                 sudo systemctl is-enabled srtplayer.service ;;
+	check) STATUS=0
+	       echo -e "srtcaller-Service: \c"
+               sudo systemctl is-enabled srtcaller.service
+	       echo -e "srtplayer-Service: \c"
+               sudo systemctl is-enabled srtplayer.service ;;
+esac
+
+if [ $STATUS = 1 ]
+then
+  echo -e "\n\033[33mStatus:\033[0m"
+  systemctl status --no-pager srtcaller.service
+  echo
+  systemctl status --no-pager srtplayer.service
+  echo  
+fi
