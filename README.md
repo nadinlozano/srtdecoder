@@ -26,6 +26,7 @@ sudo apt-get -y install omxplayer ntp git tclsh pkg-config cmake libssl-dev buil
 git clone https://github.com/OKTV-RLP/srtdecoder.git && \
 sudo \cp -rf srtdecoder/* / && \
 sudo rm -rf srtdecoder && \
+sudo echo 'splash quiet plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0 fbcon=map:2' >> /boot/cmdline.txt
 wget https://github.com/Haivision/srt/archive/v1.4.1.tar.gz && \
 sudo tar -zxvf v1.4.1.tar.gz -C /usr/local && \
 rm -rf v1.4.1.tar.gz && \
