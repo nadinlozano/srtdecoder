@@ -20,9 +20,9 @@ Konfiguration für Raspis zum Abrufen und Decodieren von SRT Signalen.
 
 SRTDecoder samt Abhängigkeiten installieren:
 ```
-sudo apt update && \
-sudo apt upgrade && \
-sudo apt install -y omxplayer ntp git && \
+sudo apt-get update && \
+sudo apt-get -y upgrade && \
+sudo apt-get -y install omxplayer ntp git tclsh pkg-config cmake libssl-dev build-essential && \
 git clone https://github.com/OKTV-RLP/srtdecoder.git && \
 sudo \cp -rf srtdecoder/* / && \
 sudo rm -rf srtdecoder && \
@@ -30,7 +30,7 @@ wget https://github.com/Haivision/srt/archive/v1.4.1.tar.gz && \
 sudo tar -zxvf v1.4.1.tar.gz -C /usr/local && \
 rm -rf v1.4.1.tar.gz && \
 cd /usr/local/srt-1.4.1 && \
-./configure && \
+sudo ./configure && \
 sudo make && \
 sudo make install && \
 cd && \
