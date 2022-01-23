@@ -22,17 +22,16 @@ Konfiguration für Raspis zum Abrufen und Decodieren von SRT Signalen.
 ```
 sudo apt-get update && \
 sudo apt-get -y upgrade && \
-sudo apt-get -y install omxplayer ntp git tclsh pkg-config cmake libssl-dev build-essential && \
-git clone https://github.com/OKTV-RLP/srtdecoder.git && \
+sudo apt-get -y install omxplayer git tclsh pkg-config cmake libssl-dev build-essential && \
+git clone https://github.com/nadinlozano/srtdecoder.git && \
 sudo \cp -rf srtdecoder/* / && \
 sudo rm -rf srtdecoder && \
-sudo bash -c "echo 'splash quiet plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0 fbcon=map:2' >> /boot/cmdline.txt"
-wget https://github.com/Haivision/srt/archive/v1.4.1.tar.gz && \
-sudo tar -zxvf v1.4.1.tar.gz -C /usr/local && \
-rm -rf v1.4.1.tar.gz && \
-cd /usr/local/srt-1.4.1 && \
+wget https://github.com/Haivision/srt/archive/refs/tags/v1.4.4.tar.gz && \
+sudo tar -zxvf v1.4.4.tar.gz -C /usr/local && \
+rm -rf v1.4.4 tar.gz && \
+cd /usr/local/srt-1.4.4 && \
 sudo ./configure && \
-sudo make && \
+sudo make -j4 && \
 sudo make install && \
 cd && \
 sudo stream-config && \
